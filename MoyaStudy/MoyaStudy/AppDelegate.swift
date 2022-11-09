@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  Moya
+//  MoyaStudy
 //
-//  Created by Jeongwan Kim on 2022/09/06.
+//  Created by 2jw.kim on 2022/11/09.
 //
 
 import UIKit
