@@ -253,7 +253,7 @@ extension ViewController: UITextFieldDelegate {
         }
         
         UIView.animate(withDuration: 0.3) {
-            // 1초에 60번 새로 그리는 runLoop를 자연스럽게 해줌(애니메이션 처리)
+            // 1초에 60번 새로 그리는 runLoop를 자연스럽게 해줌(애니메이션 처리를 위해 사용)
             self.stackView.layoutIfNeeded()
         }
         
