@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
     private let textViewHeight: CGFloat = 40
     
@@ -47,7 +47,7 @@ class ViewController: UIViewController {
         tf.autocorrectionType = .no
         tf.spellCheckingType = .no
         tf.keyboardType = .emailAddress
-//        tf.addTarget(self, action: #selector(<#T##@objc method#>), for: .editingChanged)
+        tf.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
         return tf
     }()
     
@@ -84,7 +84,7 @@ class ViewController: UIViewController {
         tf.spellCheckingType = .no
         tf.isSecureTextEntry = true
         tf.clearsOnBeginEditing = false
-//        tf.addTarget(self, action: #selector(<#T##@objc method#>), for: .editingChanged)
+        tf.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
         return tf
     }()
     
@@ -107,7 +107,7 @@ class ViewController: UIViewController {
         button.setTitle("로그인", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         button.isEnabled = false
-//        button.addTarget(self, action: #selector(<#T##@objc method#>), for: .touchUpInside)
+        button.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -143,6 +143,10 @@ class ViewController: UIViewController {
         passwordTextField.delegate = self
         
         makeUI()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     private func makeUI() {
@@ -233,6 +237,30 @@ extension ViewController {
         passwordTextField.isSecureTextEntry.toggle()
     }
     
+    @objc func textFieldEditingChanged(_ textField: UITextField) {
+        if textField.text?.count == 1 {
+            if textField.text?.first == " " {
+                textField.text = ""
+                return
+            }
+        }
+        
+        guard
+            let email = emailTextField.text, !email.isEmpty,
+            let password = passwordTextField.text, !password.isEmpty
+        else {
+            loginButton.backgroundColor = .clear
+            loginButton.isEnabled = false
+            return
+        }
+        
+        loginButton.backgroundColor = UIColor.red
+        loginButton.isEnabled = true
+    }
+    
+    @objc func loginButtonTapped() {
+        print("로그인 버튼 눌림")
+    }
 }
 
 // MARK: - UITextFieldDelegate
@@ -256,7 +284,6 @@ extension ViewController: UITextFieldDelegate {
             // 1초에 60번 새로 그리는 runLoop를 자연스럽게 해줌(애니메이션 처리를 위해 사용)
             self.stackView.layoutIfNeeded()
         }
-        
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -279,8 +306,6 @@ extension ViewController: UITextFieldDelegate {
         UIView.animate(withDuration: 0.3) {
             self.stackView.layoutIfNeeded()
         }
-        
     }
-    
 }
 
