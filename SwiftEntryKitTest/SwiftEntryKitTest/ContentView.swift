@@ -36,8 +36,8 @@ class ContentViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    func insertMessage(message: String) {
-        toastManager.messages.append(NotificationMessage())
+    func insertMessage(message: NotificationMessage = NotificationMessage()) {
+        toastManager.insertMessage(message: message)
     }
 }
 
@@ -47,7 +47,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             Button(action: {
-                viewModel.insertMessage(message: UUID().uuidString)
+                viewModel.insertMessage()
             }) {
                 Text("Show Toast Messages")
                     .padding()
