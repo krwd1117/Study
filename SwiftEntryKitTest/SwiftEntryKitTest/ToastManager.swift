@@ -5,13 +5,34 @@
 //  Created by Jeongwan Kim on 2024/07/01.
 //
 
+import Combine
 import SwiftUI
 
 class ToastManager {
-    @Published var messages: [NotificationMessage] = []
-    @Published var shownMessages: [NotificationMessage] = []
 
     static let shared = ToastManager()
+    private var cancellabels: Set<AnyCancellable> = []
+
+    @Published var messages: [NotificationMessage]
+    @Published var shownMessages: [NotificationMessage]
+
+    init(
+        messages: [NotificationMessage] = [],
+        shownMessages: [NotificationMessage] = []
+    ) {
+        self.messages = messages
+        self.shownMessages = shownMessages
+
+        binding()
+    }
+
+    private func binding() {
+        $messages.receive(on: DispatchQueue.main)
+            .sink { message in
+                print(message)
+            }
+            .store(in: &cancellabels)
+    }
 
     func showToast() {
         guard let window = UIApplication.shared.windows.first else {
@@ -52,10 +73,18 @@ class ToastManager {
             toastLabel.layer.cornerRadius = 10
             toastLabel.clipsToBounds = true
 
-            let tapGesture = UITapGestureRecognizer(
+            let tapGesture = CustomNotificationGestureRecognizer(
                 target: self,
                 action: #selector(handleTap)
             )
+            tapGesture.tapAction = {
+                self.messages = self.messages.filter{
+                    $0.uuid != message.uuid
+                }
+                self.shownMessages = self.shownMessages.filter{
+                    $0.uuid != message.uuid
+                }
+            }
             toastLabel.addGestureRecognizer(tapGesture)
             toastLabel.isUserInteractionEnabled = true
 
@@ -75,13 +104,30 @@ class ToastManager {
         }
     }
 
-    @objc private func handleTap(_ sender: UIGestureRecognizer) {
+    @objc private func handleTap(_ sender: CustomNotificationGestureRecognizer) {
         if let toastLabel = sender.view as? UILabel {
             UIView.animate(withDuration: 1.0, animations: {
                 toastLabel.alpha = 0.0
             }, completion: { _ in
                 toastLabel.removeFromSuperview()
             })
+            sender.tapAction?()
         }
     }
+}
+
+class CustomNotificationGestureRecognizer: UIGestureRecognizer {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
+        state = .recognized
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
+        state = .ended
+    }
+
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
+        state = .cancelled
+    }
+
+    var tapAction: (() -> Void)?
 }
