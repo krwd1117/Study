@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SwiftEntryKit
+import Combine
 
 struct NotificationMessage: Equatable {
     let uuid: String = UUID().uuidString
@@ -19,27 +19,26 @@ extension NotificationMessage {
 }
 
 class ContentViewModel: ObservableObject {
-    @Published var isAlertShow: Bool
-    @Published var messages: [NotificationMessage]
-    @Published var shownMessages: [NotificationMessage]
+    private var cancellables: Set<AnyCancellable> = []
+    @Published var toastManager: ToastManager
 
-    init(
-        isAlertShow: Bool = false,
-        messages: [NotificationMessage] = [],
-        shownMessages: [NotificationMessage] = []
-    ) {
-        self.isAlertShow = isAlertShow
-        self.messages = messages
-        self.shownMessages = shownMessages
+    init(toastManager: ToastManager = ToastManager()) {
+        self.toastManager = toastManager
 
         binding()
     }
 
-    func insertMessage(message: String) {
-        self.messages.append(NotificationMessage())
+    private func binding() {
+        toastManager.$messages.receive(on: DispatchQueue.main)
+            .sink { _ in
+                self.toastManager.showToast()
+            }
+            .store(in: &cancellables)
     }
 
-    private func binding() {}
+    func insertMessage(message: String) {
+        toastManager.messages.append(NotificationMessage())
+    }
 }
 
 struct ContentView: View {
@@ -49,13 +48,6 @@ struct ContentView: View {
         VStack {
             Button(action: {
                 viewModel.insertMessage(message: UUID().uuidString)
-
-                let toastManager = ToastManager(
-                    messages: $viewModel.messages,
-                    shownMessages: $viewModel.shownMessages
-                )
-                toastManager.showToast()
-
             }) {
                 Text("Show Toast Messages")
                     .padding()
