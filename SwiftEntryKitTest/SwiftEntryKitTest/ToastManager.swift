@@ -40,7 +40,7 @@ class ToastManager {
                 frame: CGRect(
                     x: window.frame.size.width / 2 - 75,
                     y: initialYPosition,
-                    width: 200,
+                    width: 150,
                     height: 35
                 )
             )
