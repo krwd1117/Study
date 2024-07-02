@@ -7,22 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		224ECB0E2C3377130035BCDD /* NotificationToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224ECB0D2C3377130035BCDD /* NotificationToastView.swift */; };
+		224ECB102C337E960035BCDD /* NotificationToastUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224ECB0F2C337E960035BCDD /* NotificationToastUIView.swift */; };
+		224ECB122C337ECD0035BCDD /* CustomNotificationGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224ECB112C337ECD0035BCDD /* CustomNotificationGestureRecognizer.swift */; };
+		224ECB142C3380350035BCDD /* NotificationMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224ECB132C3380350035BCDD /* NotificationMessage.swift */; };
 		2253D90D2C2E417700E97838 /* SwiftEntryKitTestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2253D90C2C2E417700E97838 /* SwiftEntryKitTestApp.swift */; };
 		2253D90F2C2E417700E97838 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2253D90E2C2E417700E97838 /* ContentView.swift */; };
 		2253D9112C2E417900E97838 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2253D9102C2E417900E97838 /* Assets.xcassets */; };
 		2253D9152C2E417900E97838 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2253D9142C2E417900E97838 /* Preview Assets.xcassets */; };
 		2253D91D2C2E41C000E97838 /* SwiftEntryKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2253D91C2C2E41C000E97838 /* SwiftEntryKit */; };
-		2293AA062C3270F20051E032 /* ToastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2293AA052C3270F20051E032 /* ToastManager.swift */; };
+		2293AA062C3270F20051E032 /* NotificationToastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2293AA052C3270F20051E032 /* NotificationToastManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		224ECB0D2C3377130035BCDD /* NotificationToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationToastView.swift; sourceTree = "<group>"; };
+		224ECB0F2C337E960035BCDD /* NotificationToastUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationToastUIView.swift; sourceTree = "<group>"; };
+		224ECB112C337ECD0035BCDD /* CustomNotificationGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNotificationGestureRecognizer.swift; sourceTree = "<group>"; };
+		224ECB132C3380350035BCDD /* NotificationMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationMessage.swift; sourceTree = "<group>"; };
 		2253D9092C2E417700E97838 /* SwiftEntryKitTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftEntryKitTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2253D90C2C2E417700E97838 /* SwiftEntryKitTestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftEntryKitTestApp.swift; sourceTree = "<group>"; };
 		2253D90E2C2E417700E97838 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2253D9102C2E417900E97838 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2253D9122C2E417900E97838 /* SwiftEntryKitTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftEntryKitTest.entitlements; sourceTree = "<group>"; };
 		2253D9142C2E417900E97838 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		2293AA052C3270F20051E032 /* ToastManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastManager.swift; sourceTree = "<group>"; };
+		2293AA052C3270F20051E032 /* NotificationToastManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationToastManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +45,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		224ECB172C33806B0035BCDD /* NotificationToast */ = {
+			isa = PBXGroup;
+			children = (
+				224ECB192C3380890035BCDD /* Model */,
+				224ECB1A2C3380910035BCDD /* View */,
+				2293AA052C3270F20051E032 /* NotificationToastManager.swift */,
+				224ECB112C337ECD0035BCDD /* CustomNotificationGestureRecognizer.swift */,
+			);
+			path = NotificationToast;
+			sourceTree = "<group>";
+		};
+		224ECB192C3380890035BCDD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				224ECB132C3380350035BCDD /* NotificationMessage.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		224ECB1A2C3380910035BCDD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				224ECB0F2C337E960035BCDD /* NotificationToastUIView.swift */,
+				224ECB0D2C3377130035BCDD /* NotificationToastView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		2253D9002C2E417700E97838 = {
 			isa = PBXGroup;
 			children = (
@@ -58,7 +94,7 @@
 			children = (
 				2253D90C2C2E417700E97838 /* SwiftEntryKitTestApp.swift */,
 				2253D90E2C2E417700E97838 /* ContentView.swift */,
-				2293AA052C3270F20051E032 /* ToastManager.swift */,
+				224ECB172C33806B0035BCDD /* NotificationToast */,
 				2253D9102C2E417900E97838 /* Assets.xcassets */,
 				2253D9122C2E417900E97838 /* SwiftEntryKitTest.entitlements */,
 				2253D9132C2E417900E97838 /* Preview Content */,
@@ -150,9 +186,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2293AA062C3270F20051E032 /* ToastManager.swift in Sources */,
+				2293AA062C3270F20051E032 /* NotificationToastManager.swift in Sources */,
 				2253D90F2C2E417700E97838 /* ContentView.swift in Sources */,
 				2253D90D2C2E417700E97838 /* SwiftEntryKitTestApp.swift in Sources */,
+				224ECB122C337ECD0035BCDD /* CustomNotificationGestureRecognizer.swift in Sources */,
+				224ECB0E2C3377130035BCDD /* NotificationToastView.swift in Sources */,
+				224ECB102C337E960035BCDD /* NotificationToastUIView.swift in Sources */,
+				224ECB142C3380350035BCDD /* NotificationMessage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

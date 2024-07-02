@@ -8,32 +8,11 @@
 import SwiftUI
 import Combine
 
-struct NotificationMessage: Equatable {
-    let uuid: String = UUID().uuidString
-}
-
-extension NotificationMessage {
-    static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.uuid == rhs.uuid
-    }
-}
-
 class ContentViewModel: ObservableObject {
-    private var cancellables: Set<AnyCancellable> = []
-    @Published var toastManager: ToastManager
+    @Published var toastManager: NotificationToastManager
 
-    init(toastManager: ToastManager = ToastManager()) {
-        self.toastManager = toastManager
-
-        binding()
-    }
-
-    private func binding() {
-        toastManager.$messages.receive(on: DispatchQueue.main)
-            .sink { _ in
-                self.toastManager.showToast()
-            }
-            .store(in: &cancellables)
+    init() {
+        self.toastManager = NotificationToastManager(maxCount: 5)
     }
 
     func insertMessage(message: NotificationMessage = NotificationMessage()) {
@@ -56,11 +35,6 @@ struct ContentView: View {
                     .cornerRadius(8)
             }
         }
-    }
-}
-class Utils {
-    static func getRootViewController() -> UIViewController? {
-        return UIApplication.shared.windows.first?.rootViewController
     }
 }
 

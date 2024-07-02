@@ -8,19 +8,17 @@
 import Combine
 import SwiftUI
 
-class ToastManager {
-
-    static let shared = ToastManager()
+class NotificationToastManager {
+    static let shared = NotificationToastManager()
     private var cancellabels: Set<AnyCancellable> = []
 
     @Published var messages: [NotificationMessage]
     @Published var shownMessages: [NotificationMessage]
 
-    var maxCount: Int = 5
-
     init(
         messages: [NotificationMessage] = [],
-        shownMessages: [NotificationMessage] = []
+        shownMessages: [NotificationMessage] = [],
+        maxCount: Int = 5
     ) {
         self.messages = messages
         self.shownMessages = shownMessages
@@ -30,7 +28,9 @@ class ToastManager {
 
     private func binding() {
         $messages.receive(on: DispatchQueue.main)
-            .sink { message in }
+            .sink { message in
+                self.showToast()
+            }
             .store(in: &cancellabels)
     }
 
@@ -55,14 +55,6 @@ class ToastManager {
             return
         }
 
-        let tapGesture = UITapGestureRecognizer(
-            target: self,
-            action: #selector(handleTap)
-        )
-
-        window.addGestureRecognizer(tapGesture)
-        window.isUserInteractionEnabled = true
-
         // 새로운 메시지만 그리기 위해 filter
         let newMessages = messages.filter { !shownMessages.contains($0) }
 
@@ -72,41 +64,27 @@ class ToastManager {
             // 최종 높이 값 지정
             let finalYPosition = window.frame.size.height - 100 - CGFloat((messages.count - 1 - index) * 50)
 
-            // Toast UI
-            let toastLabel = UILabel(
+            let toastView = NotificationToastUIView(
                 frame: CGRect(
                     x: window.frame.size.width / 2 - 75,
                     y: initialYPosition,
                     width: 150,
                     height: 35
-                )
+                ),
+                message: message,
+                tapAction: { [weak self] in
+                    self?.deleteMessage(message: message)
+                }
             )
-            toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-            toastLabel.textColor = UIColor.white
-            toastLabel.textAlignment = .center
-            toastLabel.text = message.uuid
-            toastLabel.alpha = 1.0
-            toastLabel.layer.cornerRadius = 10
-            toastLabel.clipsToBounds = true
 
-            let tapGesture = CustomNotificationGestureRecognizer(
-                target: self,
-                action: #selector(handleTap)
-            )
-            tapGesture.tapAction = {
-                self.deleteMessage(message: message)
-            }
-            toastLabel.addGestureRecognizer(tapGesture)
-            toastLabel.isUserInteractionEnabled = true
-
-            window.addSubview(toastLabel)
+            window.addSubview(toastView)
 
             // 아래에서 위로 올라오는 애니메이션
             UIView.animate(
                 withDuration: 1.0, delay: 0.0,
                 options: .curveEaseOut,
                 animations: {
-                    toastLabel.frame.origin.y = finalYPosition
+                    toastView.frame.origin.y = finalYPosition
                 },
                 completion: { _ in }
             )
@@ -115,6 +93,7 @@ class ToastManager {
         }
     }
 
+    /// 중간에 있는 메시지를 터치하여 목록에서 지울 때, 상단의 메시지가 그 위치에 그대로 보여지는 것 대신 밑으로 이동시키기 위해 새롭게 화면을 그림
     private func reRendering() {
         guard let window = UIApplication.shared.windows.first else {
             return
@@ -123,41 +102,14 @@ class ToastManager {
         for (index, message) in shownMessages.enumerated() {
             let finalYPosition = window.frame.size.height - 100 - CGFloat(index * 50)
 
-            if let toastLabel = window.subviews.first(where: { ($0 as? UILabel)?.text == message.uuid }) {
+            if let toastView = window.subviews.first(where: { ($0 as? NotificationToastUIView)?.message.uuid == message.uuid }) {
                 UIView.animate(
-                    withDuration: 1.0,
+                    withDuration: 0.5,
                     animations: {
-                        toastLabel.frame.origin.y = finalYPosition
+                        toastView.frame.origin.y = finalYPosition
                     }
                 )
             }
         }
-    }
-
-    @objc private func handleTap(_ sender: CustomNotificationGestureRecognizer) {
-        if let toastLabel = sender.view as? UILabel {
-            UIView.animate(withDuration: 1.0, animations: {
-                toastLabel.alpha = 0.0
-            }, completion: { _ in
-                toastLabel.removeFromSuperview()
-            })
-            sender.tapAction?()
-        }
-    }
-}
-
-class CustomNotificationGestureRecognizer: UIGestureRecognizer {
-    var tapAction: (() -> Void)?
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
-        state = .recognized
-    }
-
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
-        state = .ended
-    }
-
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
-        state = .cancelled
     }
 }
