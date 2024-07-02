@@ -10,19 +10,24 @@ import CocoaMQTT
 
 class MQTTManager {
     private var mqtt: CocoaMQTT? = nil
-    
+    private var notificationToastManager: NotificationToastManager? = nil
+
     static let shared = MQTTManager()
     
     init(mqtt: CocoaMQTT? = nil) {
+
+
+        self.notificationToastManager = NotificationToastManager(maxCount: 5)
+
         let clientID = "Test"
         let host = "broker.hivemq.com"
         let port: UInt16 = 1883
-        let userName = "test1234"
-        let password = "Test1234"
+//        let userName = "test1234"
+//        let password = "Test1234"
         
         self.mqtt = CocoaMQTT(clientID: clientID, host: host, port: port)
-        self.mqtt?.username = userName
-        self.mqtt?.password = password
+//        self.mqtt?.username = userName
+//        self.mqtt?.password = password
         self.mqtt?.keepAlive = 60
         self.mqtt?.autoReconnect = true // 네트워크 끊겨도 다시 연결 시고
         self.mqtt?.delegate = self
@@ -57,6 +62,9 @@ extension MQTTManager: CocoaMQTTDelegate {
     func mqtt(_ mqtt: CocoaMQTT, didReceiveMessage message: CocoaMQTTMessage, id: UInt16) {
         print(":::: 📥didReceiveMessage ::::")
         print(":::: 📥message : \(message.string ?? "nil msg") , id: \(id)")
+
+        let message = NotificationMessage(message: message.string)
+        notificationToastManager?.insertMessage(message: message)
     }
     
     /// Topic 구독 성공 여부

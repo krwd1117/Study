@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		224ECB232C3382750035BCDD /* CustomNotificationGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224ECB1C2C3382740035BCDD /* CustomNotificationGestureRecognizer.swift */; };
+		224ECB242C3382750035BCDD /* NotificationMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224ECB1E2C3382740035BCDD /* NotificationMessage.swift */; };
+		224ECB252C3382750035BCDD /* NotificationToastUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224ECB202C3382740035BCDD /* NotificationToastUIView.swift */; };
+		224ECB262C3382750035BCDD /* NotificationToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224ECB212C3382740035BCDD /* NotificationToastView.swift */; };
+		224ECB272C3382750035BCDD /* NotificationToastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224ECB222C3382740035BCDD /* NotificationToastManager.swift */; };
 		6B7D32452C298E22001FED93 /* MQTTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7D32442C298E22001FED93 /* MQTTApp.swift */; };
 		6B7D32472C298E22001FED93 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7D32462C298E22001FED93 /* ContentView.swift */; };
 		6B7D32492C298E23001FED93 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B7D32482C298E23001FED93 /* Assets.xcassets */; };
@@ -36,6 +41,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		224ECB1C2C3382740035BCDD /* CustomNotificationGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNotificationGestureRecognizer.swift; sourceTree = "<group>"; };
+		224ECB1E2C3382740035BCDD /* NotificationMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationMessage.swift; sourceTree = "<group>"; };
+		224ECB202C3382740035BCDD /* NotificationToastUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationToastUIView.swift; sourceTree = "<group>"; };
+		224ECB212C3382740035BCDD /* NotificationToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationToastView.swift; sourceTree = "<group>"; };
+		224ECB222C3382740035BCDD /* NotificationToastManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationToastManager.swift; sourceTree = "<group>"; };
 		6B7D32412C298E22001FED93 /* MQTT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MQTT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B7D32442C298E22001FED93 /* MQTTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MQTTApp.swift; sourceTree = "<group>"; };
 		6B7D32462C298E22001FED93 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -75,6 +85,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		224ECB1B2C3382740035BCDD /* NotificationToast */ = {
+			isa = PBXGroup;
+			children = (
+				224ECB1C2C3382740035BCDD /* CustomNotificationGestureRecognizer.swift */,
+				224ECB1D2C3382740035BCDD /* Model */,
+				224ECB1F2C3382740035BCDD /* View */,
+				224ECB222C3382740035BCDD /* NotificationToastManager.swift */,
+			);
+			path = NotificationToast;
+			sourceTree = "<group>";
+		};
+		224ECB1D2C3382740035BCDD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				224ECB1E2C3382740035BCDD /* NotificationMessage.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		224ECB1F2C3382740035BCDD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				224ECB202C3382740035BCDD /* NotificationToastUIView.swift */,
+				224ECB212C3382740035BCDD /* NotificationToastView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		6B7D32382C298E22001FED93 = {
 			isa = PBXGroup;
 			children = (
@@ -98,6 +136,7 @@
 		6B7D32432C298E22001FED93 /* MQTT */ = {
 			isa = PBXGroup;
 			children = (
+				224ECB1B2C3382740035BCDD /* NotificationToast */,
 				6B7D326F2C298F81001FED93 /* Managers */,
 				6B7D32442C298E22001FED93 /* MQTTApp.swift */,
 				6B7D32462C298E22001FED93 /* ContentView.swift */,
@@ -278,7 +317,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B7D32472C298E22001FED93 /* ContentView.swift in Sources */,
+				224ECB242C3382750035BCDD /* NotificationMessage.swift in Sources */,
+				224ECB262C3382750035BCDD /* NotificationToastView.swift in Sources */,
+				224ECB232C3382750035BCDD /* CustomNotificationGestureRecognizer.swift in Sources */,
+				224ECB252C3382750035BCDD /* NotificationToastUIView.swift in Sources */,
 				6B7D32452C298E22001FED93 /* MQTTApp.swift in Sources */,
+				224ECB272C3382750035BCDD /* NotificationToastManager.swift in Sources */,
 				6B7D32712C298F8D001FED93 /* MQTTManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -443,7 +487,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MQTT/Preview Content\"";
-				DEVELOPMENT_TEAM = 5TQSUXNFZV;
+				DEVELOPMENT_TEAM = XF7K9N6497;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -451,6 +495,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -472,7 +517,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MQTT/Preview Content\"";
-				DEVELOPMENT_TEAM = 5TQSUXNFZV;
+				DEVELOPMENT_TEAM = XF7K9N6497;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -480,6 +525,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
-    
+
+    let mqtt: MQTTManager?
+
     init() {
-        let mqtt = MQTTManager.shared
+        mqtt = MQTTManager.shared
     }
     
     var body: some View {
         VStack {
             Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
             Text("Hello, world!")
         }
         .padding()
