@@ -15,24 +15,22 @@ class MQTTManager {
     static let shared = MQTTManager()
     
     init(mqtt: CocoaMQTT? = nil) {
-
-
         self.notificationToastManager = NotificationToastManager(maxCount: 5)
 
         let clientID = "Test"
         let host = "broker.hivemq.com"
         let port: UInt16 = 1883
-//        let userName = "test1234"
-//        let password = "Test1234"
         
         self.mqtt = CocoaMQTT(clientID: clientID, host: host, port: port)
-//        self.mqtt?.username = userName
-//        self.mqtt?.password = password
         self.mqtt?.keepAlive = 60
-        self.mqtt?.autoReconnect = true // 네트워크 끊겨도 다시 연결 시고
+        self.mqtt?.autoReconnect = true // 네트워크 끊겨도 다시 연결 시도
         self.mqtt?.delegate = self
         
         _ = self.mqtt?.connect()
+    }
+
+    deinit {
+        print("MQTT Deinit")
     }
 }
 
@@ -42,7 +40,7 @@ extension MQTTManager: CocoaMQTTDelegate {
     /// MQTT가 연결이 된 후 ack가 접속 허용(.accept)되었을 때 Topic을 구독
     func mqtt(_ mqtt: CocoaMQTT, didConnectAck ack: CocoaMQTTConnAck) {
         print(":::: didConnectAck ::::")
-        mqtt.subscribe("test1234", qos: .qos0)
+        mqtt.subscribe("Quintet", qos: .qos0)
     }
     
     ///클라이언트가 브로커에 메시지를 보낼 때 ID를 생성(양방향일때 사용)
@@ -80,19 +78,19 @@ extension MQTTManager: CocoaMQTTDelegate {
         print(":::: topics: \(topics)")
     }
     
-    /// 연결이 되어 있다면 일정 시간 마다 1분마다 mqttDidPing 호출
+    /// 연결이 되어 있다면 일정 시간 마다 호출
     func mqttDidPing(_ mqtt: CocoaMQTT) {
         print(":::: mqttDidPing ::::")
         print(":::: mqtt 연결상태 : \(mqtt.connState.description)\n")
     }
     
-    /// 연결이 되어 있다면 일정 시간 마다 1분마다 mqttDidReceivePong 호출 - mqttDidPing이 호출된다음(핑퐁)
+    /// 연결이 되어 있다면 일정 시간 마다 1분마다 mqttDidReceivePong 호출 - (mqttDidPing이 된 다음에 호출 됨)
     func mqttDidReceivePong(_ mqtt: CocoaMQTT) {
         print(":::: mqttDidReceivePong ::::")
         print(":::: mqtt 연결상태 : \(mqtt.connState.description)\n")
     }
     
-    ///     MQTT connect시 실패 + disconnect
+    /// MQTT connect시 실패 + disconnect
     func mqttDidDisconnect(_ mqtt: CocoaMQTT, withError err: Error?) {
         print(":::: mqttDidReceivePong ::::")
         print(":::: err : \(err?.localizedDescription ?? "error...")")

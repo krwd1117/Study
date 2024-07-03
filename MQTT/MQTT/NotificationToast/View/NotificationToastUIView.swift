@@ -28,7 +28,6 @@ class NotificationToastUIView: UIView {
     }
 
     private func setupView() {
-
         let label = UILabel()
         label.text = message.message
         label.textColor = .white

@@ -58,6 +58,9 @@ class NotificationToastManager {
             return
         }
 
+        window.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(windowTapped)))
+        window.isUserInteractionEnabled = true
+
         // 새로운 메시지만 그리기 위해 filter
         let newMessages = messages.filter { !shownMessages.contains($0) }
 
@@ -114,5 +117,9 @@ class NotificationToastManager {
                 )
             }
         }
+    }
+
+    @objc func windowTapped() {
+        print("windowTapped!")
     }
 }

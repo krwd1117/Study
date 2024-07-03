@@ -13,7 +13,7 @@ struct NotificationMessage: Equatable {
 
     init(
         uuid: String = UUID().uuidString,
-        message: String? = "unKnwonMessage"
+        message: String? = "unKnwon Message"
     ) {
         self.uuid = uuid
         self.message = message
