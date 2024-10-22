@@ -1,6 +1,8 @@
 package com.krwd.learn_spring;
 
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.krwd.learn_spring.game.GameRunner;
@@ -40,5 +42,8 @@ public class App02HelloWorldSpring {
 		// Address.class 라는 타입의 빈을 얻고 싶을 때
 //		Address address2 = context.getBean(Address.class);
 //		System.out.println(address2);
+		
+		Arrays.stream(context.getBeanDefinitionNames())
+			.forEach(System.out::println);
 	}
 }

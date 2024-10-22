@@ -1,7 +1,9 @@
 package com.krwd.learn_spring;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 record Person(String name, int age, Address address) {};
 record Address(String firstLine, String city) {};
@@ -20,6 +22,7 @@ public class HelloWorldConfiguration {
 	public int age() {
 		return 30;
 	}
+	
 	
 	@Bean
 	public Person person() {
@@ -40,13 +43,32 @@ public class HelloWorldConfiguration {
 		return person;
 	}
 	
+	@Bean
+	@Primary
+	public Person person4Parameters(String name, int age, Address address) { // name, age, address2
+		var person = new Person(name, age, address);
+		return person;
+	}
+	
+	@Bean
+	public Person person5Qulifier(
+				String name, 
+				int age, 
+				@Qualifier("address3qualifier") Address address
+			) {
+		var person = new Person(name, age, address);
+		return person;
+	}
+	
 	@Bean(name = "address2")
+	@Primary
 	public Address address() {
 		var address = new Address("Baker Street", "London");
 		return address;
 	}
 	
 	@Bean(name = "address3")
+	@Qualifier("address3qualifier")
 	public Address address3() {
 		var address = new Address("Motinagar", "Hyderabad");
 		return address;
